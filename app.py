@@ -130,7 +130,7 @@ st.markdown(
 
     /* Buton Messenger */
     .fb-button {
-        display: inline-block;
+        display: block;
         background-color: #1877f2;
         color: white !important;
         text-decoration: none;
@@ -560,32 +560,31 @@ if submit_calcul:
             f"<td style='text-align:right; padding-top:10px; color: #cf9e42;'>{pret_final_rotund} RON</td></tr>"
         )
 
-    st.markdown(
-        f"""
-        <div class="result-box">
-            <h3 style="color: #cf9e42; margin-top: 0; font-family: 'Georgia', serif; border-bottom: 1px solid #cf9e42; padding-bottom: 5px;">Deviz Estimativ Rezultat</h3>
-            <p style="font-size: 0.95rem; line-height: 1.4; color: #f1f5f9;">{detalii_afisare_lucrari}</p>
-            
-            <div class="included-services">
-                <h4>SERVICII INCLUSE ÎN PACHET:</h4>
-                <ul>
-                    <li><b>✓ Structură academică:</b> Elaborarea cuprinsului și structurii conform ghidului facultății și cerințelor coordonatorului.</li>
-                    <li><b>✓ Metodologie:</b> Stabilirea scopului, obiectivelor, ipotezelor și designului de cercetare adaptat temei.</li>
-                    <li><b>✓ Instrument de cercetare:</b> Conceperea și structurarea chestionarului (dacă metodologia o impune).</li>
-                    <li><b>✓ Documentare academică:</b> Identificarea și integrarea surselor academice relevante și actuale.</li>
-                    <li><b>✓ Redactare & Tehnoredactare:</b> Formatare completă (fonturi, paragrafe, margini, numerotare, tabele, bibliografie).</li>
-                    <li><b>✓ Predare etapizată:</b> Transmiterea materialelor pe capitole pentru obținerea de feedback parțial.</li>
-                    <li><b>✓ PACHET SUSȚINERE (INCLUS - 0 lei):</b> Prezentare PowerPoint profesională + Discurs Word structurat pe slide-uri.</li>
-                    <li><b>✓ Modificări și corecturi:</b> Corecturile solicitate de coordonator pe parcurs sunt incluse în limita temei și structurii inițial agreate.</li>
-                </ul>
-            </div>
-
-            <hr style="border: 0; border-top: 2px solid #cf9e42; margin: 20px 0;" />
-            <table style="width:100%; font-size: 1.05rem; color: white;">
-                {randuri_pret}
-            </table>
-            <a href="https://m.me/" target="_blank" class="fb-button">💬 Trimite comanda pe Facebook Messenger</a>
-        </div>
-        """,
-        unsafe_allow_html=True,
+    servicii_incluse_html = (
+        '<div class="included-services">'
+        '<h4>SERVICII INCLUSE ÎN PACHET:</h4>'
+        '<ul>'
+        '<li><b>✓ Structură academică:</b> Elaborarea cuprinsului și structurii conform ghidului facultății și cerințelor coordonatorului.</li>'
+        '<li><b>✓ Metodologie:</b> Stabilirea scopului, obiectivelor, ipotezelor și designului de cercetare adaptat temei.</li>'
+        '<li><b>✓ Instrument de cercetare:</b> Conceperea și structurarea chestionarului (dacă metodologia o impune).</li>'
+        '<li><b>✓ Documentare academică:</b> Identificarea și integrarea surselor academice relevante și actuale.</li>'
+        '<li><b>✓ Redactare & Tehnoredactare:</b> Formatare completă (fonturi, paragrafe, margini, numerotare, tabele, bibliografie).</li>'
+        '<li><b>✓ Predare etapizată:</b> Transmiterea materialelor pe capitole pentru obținerea de feedback parțial.</li>'
+        '<li><b>✓ PACHET SUSȚINERE (INCLUS - 0 lei):</b> Prezentare PowerPoint profesională + Discurs Word structurat pe slide-uri.</li>'
+        '<li><b>✓ Modificări și corecturi:</b> Corecturile solicitate de coordonator pe parcurs sunt incluse în limita temei și structurii inițial agreate.</li>'
+        '</ul>'
+        '</div>'
     )
+
+    final_card_html = (
+        f'<div class="result-box">'
+        f'<h3 style="color: #cf9e42; margin-top: 0; font-family: \'Georgia\', serif; border-bottom: 1px solid #cf9e42; padding-bottom: 5px;">Deviz Estimativ Rezultat</h3>'
+        f'<p style="font-size: 0.95rem; line-height: 1.4; color: #f1f5f9;">{detalii_afisare_lucrari}</p>'
+        f'{servicii_incluse_html}'
+        f'<hr style="border: 0; border-top: 2px solid #cf9e42; margin: 20px 0;" />'
+        f'<table style="width:100%; font-size: 1.05rem; color: white;">{randuri_pret}</table>'
+        f'<a href="https://m.me/" target="_blank" class="fb-button">💬 Trimite comanda pe Facebook Messenger</a>'
+        f'</div>'
+    )
+
+    st.markdown(final_card_html, unsafe_allow_html=True)
