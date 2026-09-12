@@ -62,8 +62,8 @@ st.markdown(
         font-weight: bold;
     }
     
-    /* Avertisment Doctorat */
-    .doctorat-box {
+    /* Caseta Informare / Avertisment */
+    .info-box {
         background-color: #fef3c7;
         border-left: 5px solid #f59e0b;
         color: #92400e;
@@ -103,6 +103,31 @@ st.markdown(
         box-shadow: 0 4px 15px rgba(11, 37, 69, 0.2);
     }
     
+    /* Sectiune Servicii Incluse */
+    .included-services {
+        background-color: #134074;
+        border: 1px solid #cf9e42;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 20px;
+        color: #e2e8f0;
+    }
+    .included-services h4 {
+        color: #cf9e42;
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-family: 'Georgia', serif;
+    }
+    .included-services ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+    .included-services li {
+        margin-bottom: 8px;
+        font-size: 0.92rem;
+        line-height: 1.4;
+    }
+
     /* Buton Messenger */
     .fb-button {
         display: inline-block;
@@ -158,107 +183,119 @@ with col_rem:
         st.session_state.numar_lucrari -= 1
 
 # ==========================================
-# 2. Date și Coeficienți de Calcul
+# 2. Mapare Niveluri Domenii & Grile
 # ==========================================
 
-SPECIALIZARI = {
+NIVELURI_SPECIALIZARI = {
     # Nivel 1
-    "Administrarea afacerilor": 1.00,
-    "Management": 1.00,
-    "Marketing": 1.00,
-    "Turism": 1.00,
-    "Comerț": 1.00,
-    "Economie": 1.00,
-    "Sport / Educație fizică și sport": 1.00,
-    "Comunicare și relații publice": 1.00,
-    "Științele comunicării": 1.00,
-    "Jurnalism": 1.00,
+    "Administrarea afacerilor": 1,
+    "Management": 1,
+    "Marketing": 1,
+    "Turism": 1,
+    "Comerț": 1,
+    "Economie": 1,
+    "Sport / Educație fizică și sport": 1,
+    "Comunicare și relații publice": 1,
+    "Științele comunicării": 1,
+    "Jurnalism": 1,
     # Nivel 2
-    "Geografie": 1.10,
-    "Pedagogie": 1.10,
-    "PIPP – Pedagogia învățământului primar și preșcolar": 1.10,
-    "Psihopedagogie": 1.10,
-    "Științele educației": 1.10,
-    "Sociologie": 1.10,
-    "Asistență socială": 1.10,
-    "Istorie": 1.10,
-    "Filosofie": 1.10,
-    "Științe politice": 1.10,
+    "Geografie": 2,
+    "Pedagogie": 2,
+    "PIPP – Pedagogia învățământului primar și preșcolar": 2,
+    "Psihopedagogie": 2,
+    "Științele educației": 2,
+    "Sociologie": 2,
+    "Asistență socială": 2,
+    "Istorie": 2,
+    "Filosofie": 2,
+    "Științe politice": 2,
     # Nivel 3
-    "Contabilitate": 1.20,
-    "Finanțe": 1.20,
-    "Finanțe-Bănci": 1.20,
-    "Economie și afaceri internaționale": 1.20,
-    "Biologie": 1.20,
-    "Ecologie": 1.20,
-    "Horticultură": 1.20,
-    "Agronomie": 1.20,
-    "Zootehnie": 1.20,
-    "Inginerie agricolă": 1.20,
-    "Silvicultură": 1.20,
-    "Știința mediului": 1.20,
-    "Protecția mediului": 1.20,
+    "Contabilitate": 3,
+    "Finanțe": 3,
+    "Finanțe-Bănci": 3,
+    "Economie și afaceri internaționale": 3,
+    "Biologie": 3,
+    "Ecologie": 3,
+    "Horticultură": 3,
+    "Agronomie": 3,
+    "Zootehnie": 3,
+    "Inginerie agricolă": 3,
+    "Silvicultură": 3,
+    "Știința mediului": 3,
+    "Protecția mediului": 3,
     # Nivel 4
-    "Drept": 1.30,
-    "Administrație publică": 1.30,
-    "Științe administrative": 1.30,
-    "Inginerie": 1.30,
-    "Automatică și calculatoare": 1.30,
-    "Informatică": 1.30,
-    "Cibernetică": 1.30,
-    "Statistică": 1.30,
-    "Electronică": 1.30,
-    "Electrotehnică": 1.30,
-    "Construcții": 1.30,
-    "Arhitectură": 1.30,
+    "Drept": 4,
+    "Administrație publică": 4,
+    "Științe administrative": 4,
+    "Inginerie": 4,
+    "Automatică și calculatoare": 4,
+    "Informatică": 4,
+    "Cibernetică": 4,
+    "Statistică": 4,
+    "Electronică": 4,
+    "Electrotehnică": 4,
+    "Construcții": 4,
+    "Arhitectură": 4,
     # Nivel 5
-    "Medicină": 1.40,
-    "Medicină dentară": 1.40,
-    "Farmacie": 1.40,
-    "Asistență medicală generală – AMG": 1.40,
-    "Moașe": 1.40,
-    "Kinetoterapie / Balneofiziokinetoterapie": 1.40,
-    "Nutriție și dietetică": 1.40,
-    "Științe biomedicale": 1.40,
+    "Medicină": 5,
+    "Medicină dentară": 5,
+    "Farmacie": 5,
+    "Asistență medicală generală – AMG": 5,
+    "Moașe": 5,
+    "Kinetoterapie / Balneofiziokinetoterapie": 5,
+    "Nutriție și dietetică": 5,
+    "Științe biomedicale": 5,
 }
 
-TABELE_PRET = {
-    "Licență / lucrare de grad": [
-        (30, 35, 1200),
-        (36, 60, 1500),
-        (61, 80, 1800),
-        (81, 100, 2000),
-        (101, 120, 2300),
-        (121, 150, 2700),
+# Grile fixe pe [min_p, max_p, pret_n1, pret_n2, pret_n3, pret_n4, pret_n5]
+GRILE_COMPLEXE = {
+    "Licență": [
+        (30, 35, 1200, 1250, 1300, 1400, 1500),
+        (36, 60, 1500, 1600, 1700, 1800, 1950),
+        (61, 80, 1800, 1900, 2000, 2150, 2300),
+        (81, 100, 2000, 2150, 2300, 2450, 2600),
+        (101, 120, 2250, 2400, 2550, 2700, 2900),
+        (121, 150, 2550, 2750, 2950, 3150, 3400),
     ],
     "Disertație": [
-        (30, 35, 1400),
-        (36, 60, 1750),
-        (61, 80, 2050),
-        (81, 100, 2300),
-        (101, 120, 2650),
-        (121, 150, 3100),
+        (30, 35, 1300, 1350, 1400, 1500, 1600),
+        (36, 60, 1600, 1700, 1800, 1900, 2050),
+        (61, 80, 1900, 2000, 2100, 2250, 2400),
+        (81, 100, 2150, 2300, 2400, 2550, 2700),
+        (101, 120, 2400, 2550, 2700, 2850, 3000),
+        (121, 150, 2700, 2900, 3050, 3200, 3400),
     ],
+    "Lucrare de grad": [
+        (30, 35, 1250, 1350, 1350, 1450, 1550),
+        (36, 60, 1550, 1650, 1750, 1850, 2000),
+        (61, 80, 1850, 1950, 2050, 2200, 2350),
+        (81, 100, 2050, 2200, 2350, 2500, 2650),
+    ],
+}
+
+GRILE_SIMPLE = {
     "Eseu": [
-        (5, 10, 200),
-        (11, 15, 300),
-        (16, 20, 400),
-        (21, 25, 500),
-        (26, 30, 600),
+        (5, 10, 150),
+        (11, 15, 200),
+        (16, 20, 275),
+        (21, 25, 350),
+        (26, 30, 450),
     ],
     "Proiect facultate": [
-        (10, 15, 300),
-        (16, 20, 400),
-        (21, 30, 550),
-        (31, 40, 700),
-        (41, 50, 850),
+        (10, 15, 250),
+        (16, 20, 300),
+        (21, 30, 400),
+        (31, 40, 500),
+        (41, 50, 600),
+        (51, 60, 700),
     ],
     "Articol științific": [
-        (5, 8, 350),
-        (9, 12, 500),
-        (13, 16, 650),
-        (17, 20, 800),
-        (21, 25, 950),
+        (5, 8, 300),
+        (9, 12, 400),
+        (13, 16, 500),
+        (17, 20, 600),
+        (21, 25, 700),
+        (26, 30, 850),
     ],
 }
 
@@ -277,7 +314,7 @@ URGENTA_COEF = {
 }
 
 # ==========================================
-# 3. Construire Formular Dinamic
+# 3. Formular Dinamic
 # ==========================================
 
 lucrari_salvate = []
@@ -294,8 +331,9 @@ with st.form("calculator_form"):
             tip_sel = st.selectbox(
                 f"Tip Lucrare #{i+1}:",
                 [
-                    "Licență / lucrare de grad",
+                    "Licență",
                     "Disertație",
+                    "Lucrare de grad",
                     "Eseu",
                     "Proiect facultate",
                     "Articol științific",
@@ -305,7 +343,7 @@ with st.form("calculator_form"):
             )
             spec_sel = st.selectbox(
                 f"Specializare #{i+1}:",
-                sorted(list(SPECIALIZARI.keys())),
+                sorted(list(NIVELURI_SPECIALIZARI.keys())),
                 key=f"spec_{i}",
             )
 
@@ -314,7 +352,7 @@ with st.form("calculator_form"):
                 f"Număr Pagini #{i+1}:",
                 min_value=1,
                 max_value=300,
-                value=45,
+                value=35,
                 step=1,
                 key=f"pag_{i}",
             )
@@ -326,7 +364,7 @@ with st.form("calculator_form"):
 
         if tip_sel == "Teză de Doctorat":
             st.markdown(
-                "<div class='doctorat-box'>⚠️ Tezele de doctorat se evaluează individual în funcție de domeniu, volum, metodologie și complexitate. (De la 4.000 lei → ofertă personalizată)</div>",
+                "<div class='info-box'>⚠️ Tezele de doctorat se evaluează individual în funcție de domeniu, volum, metodologie și complexitate. (De la 4.000 lei → ofertă personalizată)</div>",
                 unsafe_allow_html=True,
             )
 
@@ -361,8 +399,10 @@ with st.form("calculator_form"):
             )
             opt_wp = st.checkbox("Site WordPress", key=f"wp_{i}")
         with c3:
-            opt_ppt = st.checkbox(
-                "PPT + discurs susținere (+50 lei)", key=f"ppt_{i}"
+            opt_pachet = st.checkbox(
+                "Pachet susținere (PPT + Discurs) - INCLUS (0 lei)",
+                value=True,
+                key=f"pachet_{i}",
             )
 
         lucrari_salvate.append(
@@ -378,7 +418,7 @@ with st.form("calculator_form"):
                     "spss": opt_spss,
                     "python": opt_python,
                     "wordpress": opt_wp,
-                    "ppt": opt_ppt,
+                    "pachet": opt_pachet,
                 },
             }
         )
@@ -391,7 +431,7 @@ with st.form("calculator_form"):
     submit_calcul = st.form_submit_button("GENEREAZĂ CALCULUL DE PREȚ")
 
 # ==========================================
-# 4. Logica de Calcul și Afișare Deviz
+# 4. Logica de Calcul & Afișare Deviz
 # ==========================================
 
 if submit_calcul:
@@ -410,15 +450,24 @@ if submit_calcul:
             continue
 
         pagini = lucrare["pagini"]
-        tabela = TABELE_PRET.get(tip, [])
-        pret_baza_nivel1 = None
+        nivel = NIVELURI_SPECIALIZARI[lucrare["spec"]]
+        pret_baza_lucrare = None
 
-        for min_p, max_p, pret in tabela:
-            if min_p <= pagini <= max_p:
-                pret_baza_nivel1 = pret
-                break
+        if tip in GRILE_COMPLEXE:
+            tabela = GRILE_COMPLEXE[tip]
+            for tuple_row in tabela:
+                min_p, max_p = tuple_row[0], tuple_row[1]
+                if min_p <= pagini <= max_p:
+                    pret_baza_lucrare = tuple_row[nivel + 1]
+                    break
+        elif tip in GRILE_SIMPLE:
+            tabela = GRILE_SIMPLE[tip]
+            for min_p, max_p, pret in tabela:
+                if min_p <= pagini <= max_p:
+                    pret_baza_lucrare = pret
+                    break
 
-        if pret_baza_nivel1 is None:
+        if pret_baza_lucrare is None:
             detalii_afisare_lucrari += (
                 f"🔹 <b>Lucrarea #{idx+1}</b> ({tip})<br/>"
                 f"• Pagini: {pagini} pag. | Specializare: <i>{lucrare['spec']}</i><br/>"
@@ -426,16 +475,18 @@ if submit_calcul:
             )
             continue
 
-        # Formulă Calcul
-        coef_spec = SPECIALIZARI[lucrare["spec"]]
+        # Aplicare Tip Conținut și Urgență
         coef_continut = CONTINUT_COEF[lucrare["continut"]]
         coef_urgenta = URGENTA_COEF[lucrare["urgenta"]]
 
-        pret_baza = pret_baza_nivel1 * coef_spec
-        pret_continut = pret_baza * coef_continut
-        pret_urgenta = pret_continut * coef_urgenta
+        pret_inainte_module = pret_baza_lucrare * coef_continut * coef_urgenta
 
-        # Praguri module (≤60 sau >60 pagini)
+        # Ajustare Corectură (prag minim 200 lei)
+        if lucrare["continut"] == "Corectură + verificare":
+            if pret_inainte_module < 200:
+                pret_inainte_module = 200
+
+        # Calcul Module Opționale
         cost_module = 0
         is_peste_60 = pagini > 60
         mod_list = []
@@ -460,12 +511,11 @@ if submit_calcul:
             cost_module += cost_wp
             mod_list.append(f"Site WordPress (+{cost_wp} lei)")
 
-        if lucrare["module"]["ppt"]:
-            cost_module += 50
-            mod_list.append("PPT + Discurs (+50 lei)")
+        if lucrare["module"]["pachet"]:
+            mod_list.append("PACHET SUSȚINERE (PPT + Discurs) - INCLUS (0 lei)")
 
-        pret_lucrare_inainte_discount = pret_urgenta + cost_module
-        suma_lucrari_individuale += pret_lucrare_inainte_discount
+        pret_lucrare_total = pret_inainte_module + cost_module
+        suma_lucrari_individuale += pret_lucrare_total
 
         text_module = (
             f"• Module suplimentare: {', '.join(mod_list)}<br/>"
@@ -479,7 +529,7 @@ if submit_calcul:
             f"• Volum: {pagini} pagini | Conținut: {lucrare['continut']}<br/>"
             f"• Predare: {lucrare['urgenta']}<br/>"
             f"{text_module}"
-            f"• <b>Subtotal: {round(pret_lucrare_inainte_discount)} lei</b><br/><br/>"
+            f"• <b>Subtotal: {round(pret_lucrare_total)} lei</b><br/><br/>"
         )
 
     # Calcul Discount de Volum
@@ -515,7 +565,22 @@ if submit_calcul:
         <div class="result-box">
             <h3 style="color: #cf9e42; margin-top: 0; font-family: 'Georgia', serif; border-bottom: 1px solid #cf9e42; padding-bottom: 5px;">Deviz Estimativ Rezultat</h3>
             <p style="font-size: 0.95rem; line-height: 1.4; color: #f1f5f9;">{detalii_afisare_lucrari}</p>
-            <hr style="border: 0; border-top: 2px solid #cf9e42; margin: 15px 0;" />
+            
+            <div class="included-services">
+                <h4>SERVICII INCLUSE ÎN PACHET:</h4>
+                <ul>
+                    <li><b>✓ Structură academică:</b> Elaborarea cuprinsului și structurii conform ghidului facultății și cerințelor coordonatorului.</li>
+                    <li><b>✓ Metodologie:</b> Stabilirea scopului, obiectivelor, ipotezelor și designului de cercetare adaptat temei.</li>
+                    <li><b>✓ Instrument de cercetare:</b> Conceperea și structurarea chestionarului (dacă metodologia o impune).</li>
+                    <li><b>✓ Documentare academică:</b> Identificarea și integrarea surselor academice relevante și actuale.</li>
+                    <li><b>✓ Redactare & Tehnoredactare:</b> Formatare completă (fonturi, paragrafe, margini, numerotare, tabele, bibliografie).</li>
+                    <li><b>✓ Predare etapizată:</b> Transmiterea materialelor pe capitole pentru obținerea de feedback parțial.</li>
+                    <li><b>✓ PACHET SUSȚINERE (INCLUS - 0 lei):</b> Prezentare PowerPoint profesională + Discurs Word structurat pe slide-uri.</li>
+                    <li><b>✓ Modificări și corecturi:</b> Corecturile solicitate de coordonator pe parcurs sunt incluse în limita temei și structurii inițial agreate.</li>
+                </ul>
+            </div>
+
+            <hr style="border: 0; border-top: 2px solid #cf9e42; margin: 20px 0;" />
             <table style="width:100%; font-size: 1.05rem; color: white;">
                 {randuri_pret}
             </table>
