@@ -4,7 +4,7 @@ import streamlit as st
 # 1. Configurare Pagină & Stiluri CSS
 # ==========================================
 st.set_page_config(
-    page_title="Calculator Preț - Lucrări Academice",
+    page_title="Află Singur Prețul - Lucrări Academice",
     page_icon="🎓",
     layout="centered",
 )
@@ -130,8 +130,8 @@ st.markdown(
 st.markdown(
     """
     <div class="brand-header">
-        <div class="brand-title">AM ALEXANDRA MARIN</div>
-        <div class="brand-subtitle">Excelență în Educație • Calculator Oficial de Prețuri</div>
+        <div class="brand-title">AFLĂ SINGUR PREȚUL</div>
+        <div class="brand-subtitle">Calculator Estimativ de Prețuri • Lucrări Academice</div>
     </div>
 """,
     unsafe_allow_html=True,
@@ -162,7 +162,7 @@ with col_rem:
 # ==========================================
 
 SPECIALIZARI = {
-    # Nivel 1 (x1.00)
+    # Nivel 1
     "Administrarea afacerilor": 1.00,
     "Management": 1.00,
     "Marketing": 1.00,
@@ -173,7 +173,7 @@ SPECIALIZARI = {
     "Comunicare și relații publice": 1.00,
     "Științele comunicării": 1.00,
     "Jurnalism": 1.00,
-    # Nivel 2 (x1.10)
+    # Nivel 2
     "Geografie": 1.10,
     "Pedagogie": 1.10,
     "PIPP – Pedagogia învățământului primar și preșcolar": 1.10,
@@ -184,7 +184,7 @@ SPECIALIZARI = {
     "Istorie": 1.10,
     "Filosofie": 1.10,
     "Științe politice": 1.10,
-    # Nivel 3 (x1.20)
+    # Nivel 3
     "Contabilitate": 1.20,
     "Finanțe": 1.20,
     "Finanțe-Bănci": 1.20,
@@ -198,7 +198,7 @@ SPECIALIZARI = {
     "Silvicultură": 1.20,
     "Știința mediului": 1.20,
     "Protecția mediului": 1.20,
-    # Nivel 4 (x1.30)
+    # Nivel 4
     "Drept": 1.30,
     "Administrație publică": 1.30,
     "Științe administrative": 1.30,
@@ -211,7 +211,7 @@ SPECIALIZARI = {
     "Electrotehnică": 1.30,
     "Construcții": 1.30,
     "Arhitectură": 1.30,
-    # Nivel 5 (x1.40)
+    # Nivel 5
     "Medicină": 1.40,
     "Medicină dentară": 1.40,
     "Farmacie": 1.40,
@@ -263,17 +263,17 @@ TABELE_PRET = {
 }
 
 CONTINUT_COEF = {
-    "Corectură + verificare (30%)": 0.30,
-    "Doar partea teoretică (40%)": 0.40,
-    "Doar partea practică (60%)": 0.60,
-    "Lucrare completă (100%)": 1.00,
+    "Corectură + verificare": 0.30,
+    "Doar partea teoretică": 0.40,
+    "Doar partea practică": 0.60,
+    "Lucrare completă": 1.00,
 }
 
 URGENTA_COEF = {
-    "Standard – peste 30 zile (x1.00)": 1.00,
-    "Normal – 15–30 zile (x1.08)": 1.08,
-    "Urgent – 7–14 zile (x1.20)": 1.20,
-    "Critic – sub 7 zile (x1.35)": 1.35,
+    "Standard – peste 30 zile": 1.00,
+    "Normal – 15–30 zile": 1.08,
+    "Urgent – 7–14 zile": 1.20,
+    "Critic – sub 7 zile": 1.35,
 }
 
 # ==========================================
@@ -443,39 +443,39 @@ if submit_calcul:
         if lucrare["module"]["qgis"]:
             cost_q = 200 if is_peste_60 else 150
             cost_module += cost_q
-            mod_list.append(f"QGIS (+{cost_q} lei)")
+            mod_list.append(f"Hărți QGIS (+{cost_q} lei)")
 
         if lucrare["module"]["spss"]:
             cost_s = 400 if is_peste_60 else 300
             cost_module += cost_s
-            mod_list.append(f"SPSS (+{cost_s} lei)")
+            mod_list.append(f"Analiză SPSS (+{cost_s} lei)")
 
         if lucrare["module"]["python"]:
             cost_py = 400 if is_peste_60 else 300
             cost_module += cost_py
-            mod_list.append(f"Python (+{cost_py} lei)")
+            mod_list.append(f"Aplicație Python (+{cost_py} lei)")
 
         if lucrare["module"]["wordpress"]:
             cost_wp = 400 if is_peste_60 else 300
             cost_module += cost_wp
-            mod_list.append(f"WordPress (+{cost_wp} lei)")
+            mod_list.append(f"Site WordPress (+{cost_wp} lei)")
 
         if lucrare["module"]["ppt"]:
             cost_module += 50
-            mod_list.append("PPT (+50 lei)")
+            mod_list.append("PPT + Discurs (+50 lei)")
 
         pret_lucrare_inainte_discount = pret_urgenta + cost_module
         suma_lucrari_individuale += pret_lucrare_inainte_discount
 
         text_module = (
-            f"• Module: {', '.join(mod_list)} (+{cost_module} lei)<br/>"
+            f"• Module suplimentare: {', '.join(mod_list)}<br/>"
             if mod_list
-            else "• Module: Fără module suplimentare<br/>"
+            else "• Module suplimentare: Fără module opționale<br/>"
         )
 
         detalii_afisare_lucrari += (
             f"🔹 <b>Lucrarea #{idx+1}</b> ({tip})<br/>"
-            f"• Specializare: <i>{lucrare['spec']}</i> (x{coef_spec:.2f}) | Temă: <i>{lucrare['tema']}</i><br/>"
+            f"• Specializare: <i>{lucrare['spec']}</i> | Temă: <i>{lucrare['tema']}</i><br/>"
             f"• Volum: {pagini} pagini | Conținut: {lucrare['continut']}<br/>"
             f"• Predare: {lucrare['urgenta']}<br/>"
             f"{text_module}"
